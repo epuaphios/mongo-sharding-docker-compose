@@ -5,7 +5,7 @@ services:
   mongo-configserver-01:
     image: mongo
     hostname: mongo-configserver-01
-    command: mongod --auth --port 27017 --configsvr  --replSet mongo-configserver --dbpath /data/db --oplogSize 16 --keyFile /data/mongodb.key
+    command: mongod --auth --port 27017 --configsvr --bind_ip_all --replSet mongo-configserver --dbpath /data/db --oplogSize 16 --keyFile /data/mongodb.key
     volumes:
         - /data/mongodb.key:/data/mongodb.key
         - ./mongo-configserver.init.js:/mongo-configserver.init.js
@@ -14,14 +14,14 @@ services:
   mongo-configserver-02:
     image: mongo
     hostname: mongo-configserver-02
-    command: mongod --auth --port 27017 --configsvr  --replSet mongo-configserver --dbpath /data/db --oplogSize 16 --keyFile /data/mongodb.key
+    command: mongod --auth --port 27017 --configsvr --bind_ip_all --replSet mongo-configserver --dbpath /data/db --oplogSize 16 --keyFile /data/mongodb.key
         - /data/mongodb.key:/data/mongodb.key
         - /data/mongodb-configserver-02/:/data/db
         - /data/log/mongodb-configserver-02-log/:/var/log/mongodb
   mongo-configserver-03:
     image: mongo
     hostname: mongo-configserver-03
-    command: mongod --auth --port 27017 --configsvr  --replSet mongo-configserver --dbpath /data/db --oplogSize 16 --keyFile /data/mongodb.key
+    command: mongod --auth --port 27017 --configsvr --bind_ip_all --replSet mongo-configserver --dbpath /data/db --oplogSize 16 --keyFile /data/mongodb.key
     volumes:
         - /data/mongodb.key:/data/mongodb.key
         - /data/mongodb-configserver-03/:/data/db
@@ -30,7 +30,7 @@ services:
   mongo-shard-01a:
     image: mongo
     hostname: mongo-shard-01a
-    command: mongod --auth --port 27018   --replSet mongo-shard-01 --dbpath /data/db --oplogSize 16 --keyFile /data/mongodb.key
+    command: mongod --auth --port 27018   --bind_ip_all --replSet mongo-shard-01 --dbpath /data/db --oplogSize 16 --keyFile /data/mongodb.key
     volumes:
         - /data/mongodb.key:/data/mongodb.key
         - ./mongo-shard-01.init.js:/mongo-shard-01.init.js
@@ -39,7 +39,7 @@ services:
   mongo-shard-01b:
     image: mongo
     hostname: mongo-shard-01b
-    command: mongod --auth --port 27018   --replSet mongo-shard-01 --dbpath /data/db --oplogSize 16 --keyFile /data/mongodb.key
+    command: mongod --auth --port 27018   --bind_ip_all --replSet mongo-shard-01 --dbpath /data/db --oplogSize 16 --keyFile /data/mongodb.key
     volumes:
         - /data/mongodb.key:/data/mongodb.key
         - /data/mongodb-shard-01b/:/data/db
@@ -47,7 +47,7 @@ services:
   mongo-shard-01c:
     image: mongo
     hostname: mongo-shard-01c
-    command: mongod --auth --port 27018   --replSet mongo-shard-01 --dbpath /data/db --oplogSize 16 --keyFile /data/mongodb.key
+    command: mongod --auth --port 27018   --bind_ip_all --replSet mongo-shard-01 --dbpath /data/db --oplogSize 16 --keyFile /data/mongodb.key
     volumes:
         - /data/mongodb.key:/data/mongodb.key
         - /data/mongodb-shard-01c/:/data/db
@@ -57,7 +57,7 @@ services:
   mongo-shard-02a:
     image: mongo
     hostname: mongo-shard-02a
-    command: mongod --auth --port 27019   --replSet mongo-shard-02 --dbpath /data/db --oplogSize 16 --keyFile /data/mongodb.key
+    command: mongod --auth --port 27019   --bind_ip_all --replSet mongo-shard-02 --dbpath /data/db --oplogSize 16 --keyFile /data/mongodb.key
     volumes:
         - /data/mongodb.key:/data/mongodb.key
         - ./mongo-shard-02.init.js:/mongo-shard-02.init.js
@@ -66,7 +66,7 @@ services:
   mongo-shard-02b:
     image: mongo
     hostname: mongo-shard-02b
-    command: mongod --auth --port 27019   --replSet mongo-shard-02 --dbpath /data/db --oplogSize 16 --keyFile /data/mongodb.key
+    command: mongod --auth --port 27019   --bind_ip_all --replSet mongo-shard-02 --dbpath /data/db --oplogSize 16 --keyFile /data/mongodb.key
     volumes:
         - /data/mongodb.key:/data/mongodb.key
         - /data/mongodb-shard-02b/:/data/db
@@ -74,7 +74,7 @@ services:
   mongo-shard-02c:
     image: mongo
     hostname: mongo-shard-02c
-    command: mongod --auth --port 27019   --replSet mongo-shard-02 --dbpath /data/db --oplogSize 16 --keyFile /data/mongodb.key
+    command: mongod --auth --port 27019   --bind_ip_all --replSet mongo-shard-02 --dbpath /data/db --oplogSize 16 --keyFile /data/mongodb.key
     volumes:
         - /data/mongodb.key:/data/mongodb.key
         - /data/mongodb-shard-02c/:/data/db
@@ -84,7 +84,7 @@ services:
   mongo-shard-03a:
     image: mongo
     hostname: mongo-shard-03a
-    command: mongod --auth --port 27020   --replSet mongo-shard-03 --dbpath /data/db --oplogSize 16 --keyFile /data/mongodb.key
+    command: mongod --auth --port 27020   --bind_ip_all --replSet mongo-shard-03 --dbpath /data/db --oplogSize 16 --keyFile /data/mongodb.key
     volumes:
         - /data/mongodb.key:/data/mongodb.key
         - ./mongo-shard-03.init.js:/mongo-shard-03.init.js
@@ -93,7 +93,7 @@ services:
   mongo-shard-03b:
     image: mongo
     hostname: mongo-shard-03b
-    command: mongod --auth --port 27020   --replSet mongo-shard-03 --dbpath /data/db --oplogSize 16 --keyFile /data/mongodb.key
+    command: mongod --auth --port 27020   --bind_ip_all --replSet mongo-shard-03 --dbpath /data/db --oplogSize 16 --keyFile /data/mongodb.key
     volumes:
         - /data/mongodb.key:/data/mongodb.key
         - /data/mongodb-shard-03b/:/data/db
@@ -101,7 +101,7 @@ services:
   mongo-shard-03c:
     image: mongo
     hostname: mongo-shard-03c
-    command: mongod --auth --port 27020   --replSet mongo-shard-03 --dbpath /data/db --oplogSize 16 --keyFile /data/mongodb.key
+    command: mongod --auth --port 27020   --bind_ip_all --replSet mongo-shard-03 --dbpath /data/db --oplogSize 16 --keyFile /data/mongodb.key
     volumes:
         - /data/mongodb.key:/data/mongodb.key
         - /data/mongodb-shard-03c/:/data/db
