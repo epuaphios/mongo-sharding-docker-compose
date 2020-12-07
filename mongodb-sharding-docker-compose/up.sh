@@ -4,8 +4,8 @@
 export COMPOSE_PROJECT_NAME=mongodbdocker
 
 ## Generate global auth key between cluster nodes
-openssl rand -base64 756 > mongodb.key
-chmod 600 mongodb.key
+openssl rand -base64 756 > /data/mongodb.key
+chmod 600 /data/mongodb.key
 
 ## Start the whole stack
 docker-compose up -d
