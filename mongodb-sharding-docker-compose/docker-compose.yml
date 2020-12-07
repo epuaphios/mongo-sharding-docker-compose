@@ -6,81 +6,116 @@ services:
     image: mongo
     command: mongod --auth --port 27017 --configsvr --noprealloc --smallfiles --replSet mongo-configserver --dbpath /data/db --oplogSize 16 --keyFile /mongodb.key
     volumes:
-        - ./mongodb.key:/mongodb.key
+        - /data/mongodb.key:/data/mongodb.key
         - ./mongo-configserver.init.js:/mongo-configserver.init.js
+        - /data/mongodb-configserver-01/:/data/db
+        - /data/log/mongodb-configserver-01-log/:/var/log/mongodb
+    expose:
+      - 27017
+    ports:
+      - '27017:27017'
   mongo-configserver-02:
     image: mongo
     command: mongod --auth --port 27017 --configsvr --noprealloc --smallfiles --replSet mongo-configserver --dbpath /data/db --oplogSize 16 --keyFile /mongodb.key
-    volumes:
-        - ./mongodb.key:/mongodb.key
+        - /data/mongodb.key:/data/mongodb.key
+        - /data/mongodb-configserver-02/:/data/db
+        - /data/log/mongodb-configserver-02-log/:/var/log/mongodb
+    expose:
+      - 27017
+    ports:
+      - '27017:27017'
   mongo-configserver-03:
     image: mongo
     command: mongod --auth --port 27017 --configsvr --noprealloc --smallfiles --replSet mongo-configserver --dbpath /data/db --oplogSize 16 --keyFile /mongodb.key
     volumes:
-        - ./mongodb.key:/mongodb.key
-    
-  # First shard 
+        - /data/mongodb.key:/data/mongodb.key
+        - /data/mongodb-configserver-02/:/data/db
+        - /data/log/mongodb-configserver-02-log/:/var/log/mongodb
+    expose:
+      - 27017
+    ports:
+      - '27017:27017'
+  # First shard
   mongo-shard-01a:
     image: mongo
     command: mongod --auth --port 27018 --noprealloc --smallfiles --replSet mongo-shard-01 --dbpath /data/db --nojournal --oplogSize 16 --keyFile /mongodb.key
     volumes:
-        - ./mongodb.key:/mongodb.key
+        - /data/mongodb.key:/data/mongodb.key
         - ./mongo-shard-01.init.js:/mongo-shard-01.init.js
+        - /data/mongodb-shard-01a/:/data/db
+        - /data/log/mongodb-shard-01a_log/:/var/log/mongodb
   mongo-shard-01b:
     image: mongo
     command: mongod --auth --port 27018 --noprealloc --smallfiles --replSet mongo-shard-01 --dbpath /data/db --nojournal --oplogSize 16 --keyFile /mongodb.key
     volumes:
-        - ./mongodb.key:/mongodb.key
+        - /data/mongodb.key:/data/mongodb.key
+        - /data/mongodb-shard-01b/:/data/db
+        - /data/log/mongo-shard-01b_log/:/var/log/mongodb
   mongo-shard-01c:
     image: mongo
     command: mongod --auth --port 27018 --noprealloc --smallfiles --replSet mongo-shard-01 --dbpath /data/db --nojournal --oplogSize 16 --keyFile /mongodb.key
     volumes:
-        - ./mongodb.key:/mongodb.key
+        - /data/mongodb.key:/data/mongodb.key
+        - /data/mongodb-shard-01c/:/data/db
+        - /data/log/mongodb-shard-01c_log/:/var/log/mongodb
 
   # Second shard
   mongo-shard-02a:
     image: mongo
     command: mongod --auth --port 27019 --noprealloc --smallfiles --replSet mongo-shard-02 --dbpath /data/db --nojournal --oplogSize 16 --keyFile /mongodb.key
     volumes:
-        - ./mongodb.key:/mongodb.key
+        - /data/mongodb.key:/data/mongodb.key
         - ./mongo-shard-02.init.js:/mongo-shard-02.init.js
+        - /data/mongodb-shard-02a/:/data/db
+        - /data/log/mongodb-shard-02a_log/:/var/log/mongodb
   mongo-shard-02b:
     image: mongo
     command: mongod --auth --port 27019 --noprealloc --smallfiles --replSet mongo-shard-02 --dbpath /data/db --nojournal --oplogSize 16 --keyFile /mongodb.key
     volumes:
-        - ./mongodb.key:/mongodb.key
+        - /data/mongodb.key:/data/mongodb.key
+        - /data/mongodb-shard-02b/:/data/db
+        - /data/log/mongodb-shard-02b_log/:/var/log/mongodb
   mongo-shard-02c:
     image: mongo
     command: mongod --auth --port 27019 --noprealloc --smallfiles --replSet mongo-shard-02 --dbpath /data/db --nojournal --oplogSize 16 --keyFile /mongodb.key
     volumes:
-        - ./mongodb.key:/mongodb.key
+        - /data/mongodb.key:/data/mongodb.key
+        - /data/mongodb-shard-02c/:/data/db
+        - /data/log/mongodb-shard-02c_log/:/var/log/mongodb
 
   # Third shard
   mongo-shard-03a:
     image: mongo
     command: mongod --auth --port 27020 --noprealloc --smallfiles --replSet mongo-shard-03 --dbpath /data/db --nojournal --oplogSize 16 --keyFile /mongodb.key
     volumes:
-        - ./mongodb.key:/mongodb.key
+        - /data/mongodb.key:/data/mongodb.key
         - ./mongo-shard-03.init.js:/mongo-shard-03.init.js
+        - /data/mongodb-shard-03a/:/data/db
+        - /data/log/mongodb-shard-03a_log/:/var/log/mongodb
   mongo-shard-03b:
     image: mongo
     command: mongod --auth --port 27020 --noprealloc --smallfiles --replSet mongo-shard-03 --dbpath /data/db --nojournal --oplogSize 16 --keyFile /mongodb.key
     volumes:
-        - ./mongodb.key:/mongodb.key
+        - /data/mongodb.key:/data/mongodb.key
+        - /data/mongodb-shard-03b/:/data/db
+        - /data/log/mongodb-shard-03b_log/:/var/log/mongodb
   mongo-shard-03c:
     image: mongo
     command: mongod --auth --port 27020 --noprealloc --smallfiles --replSet mongo-shard-03 --dbpath /data/db --nojournal --oplogSize 16 --keyFile /mongodb.key
     volumes:
-        - ./mongodb.key:/mongodb.key
-
+        - /data/mongodb.key:/data/mongodb.key
+        - /data/mongodb-shard-03c/:/data/db
+        - /data/log/mongodb-shard-03c_log/:/var/log/mongodb
   # Mongo router
   mongo-router-01:
     image: mongo
     command: mongos --port 27017 --configdb mongo-configserver/mongo-configserver-01:27017,mongo-configserver-02:27017,mongo-configserver-03:27017 --keyFile /mongodb.key
     volumes:
-        - ./mongodb.key:/mongodb.key
+        - /data/mongodb.key:/data/mongodb.key
         - ./mongo-sharding.init.js:/mongo-sharding.init.js
         - ./mongo-auth.init.js:/mongo-auth.init.js
+        - /data/mongodb-router-01/:/data/db
+        - /data/log/mongodb--router-01_log/:/var/log/mongodb
     # Can be useful if you need to access it from your current host within Robomongo or some other clients
     #ports:
     #  - "27017:27017"
@@ -97,4 +132,3 @@ services:
       - mongo-shard-03a
       - mongo-shard-03b
       - mongo-shard-03c
-
