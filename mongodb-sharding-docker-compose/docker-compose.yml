@@ -118,6 +118,10 @@ services:
         - ./mongo-auth.init.js:/mongo-auth.init.js
         - /data/mongodb-router-01/:/data/db
         - /data/log/mongodb--router-01_log/:/var/log/mongodb
+    expose:
+      - 27017
+    ports:
+      - '27017:27017'        
     # Can be useful if you need to access it from your current host within Robomongo or some other clients
     #ports:
     #  - "27017:27017"
