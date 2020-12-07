@@ -4,7 +4,7 @@ services:
   # Config servers for metadata
   mongo-configserver-01:
     image: mongo
-    command: mongod --auth --port 27017 --configsvr   --replSet mongo-configserver --dbpath /data/db --oplogSize 16 --keyFile /data/mongodb.key
+    command: mongod --auth --port 27017 --configsvr  --replSet mongo-configserver --dbpath /data/db --oplogSize 16 --keyFile /data/mongodb.key
     volumes:
         - /data/mongodb.key:/data/mongodb.key
         - ./mongo-configserver.init.js:/mongo-configserver.init.js
@@ -12,13 +12,13 @@ services:
         - /data/log/mongodb-configserver-01-log/:/var/log/mongodb
   mongo-configserver-02:
     image: mongo
-    command: mongod --auth --port 27017 --configsvr   --replSet mongo-configserver --dbpath /data/db --oplogSize 16 --keyFile /data/mongodb.key
+    command: mongod --auth --port 27017 --configsvr  --replSet mongo-configserver --dbpath /data/db --oplogSize 16 --keyFile /data/mongodb.key
         - /data/mongodb.key:/data/mongodb.key
         - /data/mongodb-configserver-02/:/data/db
         - /data/log/mongodb-configserver-02-log/:/var/log/mongodb
   mongo-configserver-03:
     image: mongo
-    command: mongod --auth --port 27017 --configsvr   --replSet mongo-configserver --dbpath /data/db --oplogSize 16 --keyFile /data/mongodb.key
+    command: mongod --auth --port 27017 --configsvr  --replSet mongo-configserver --dbpath /data/db --oplogSize 16 --keyFile /data/mongodb.key
     volumes:
         - /data/mongodb.key:/data/mongodb.key
         - /data/mongodb-configserver-02/:/data/db
