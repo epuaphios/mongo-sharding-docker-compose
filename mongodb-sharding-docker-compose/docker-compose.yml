@@ -10,20 +10,12 @@ services:
         - ./mongo-configserver.init.js:/mongo-configserver.init.js
         - /data/mongodb-configserver-01/:/data/db
         - /data/log/mongodb-configserver-01-log/:/var/log/mongodb
-    expose:
-      - 27017
-    ports:
-      - '27017:27017'
   mongo-configserver-02:
     image: mongo
     command: mongod --auth --port 27017 --configsvr --noprealloc --smallfiles --replSet mongo-configserver --dbpath /data/db --oplogSize 16 --keyFile /mongodb.key
         - /data/mongodb.key:/data/mongodb.key
         - /data/mongodb-configserver-02/:/data/db
         - /data/log/mongodb-configserver-02-log/:/var/log/mongodb
-    expose:
-      - 27017
-    ports:
-      - '27017:27017'
   mongo-configserver-03:
     image: mongo
     command: mongod --auth --port 27017 --configsvr --noprealloc --smallfiles --replSet mongo-configserver --dbpath /data/db --oplogSize 16 --keyFile /mongodb.key
@@ -31,10 +23,6 @@ services:
         - /data/mongodb.key:/data/mongodb.key
         - /data/mongodb-configserver-02/:/data/db
         - /data/log/mongodb-configserver-02-log/:/var/log/mongodb
-    expose:
-      - 27017
-    ports:
-      - '27017:27017'
   # First shard
   mongo-shard-01a:
     image: mongo
